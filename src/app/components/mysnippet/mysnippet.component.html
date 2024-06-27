@@ -1,0 +1,83 @@
+<section>
+  <style>
+    .code-container {
+      white-space: pre-wrap;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      word-break: break-all;
+      overflow: auto;
+      resize: horizontal;
+      max-width: 100%;
+    }
+  </style>
+  <div class="container mx-auto ">
+    <div *ngIf="loading" class="text-center p-4">
+      <app-shimmer></app-shimmer>
+    </div>
+    <div *ngIf="!loading && items.length === 0" class="text-center flex flex-col items-center p-4"><img
+        src="	https://cdn3d.iconscout.com/3d/premium/thumb/empty-box-6219421-5102419.png?f=webp" alt="">
+      No snippet found from your side
+    </div>
+
+    <div class="grid sm:grid-cols-1 md:grid-cols-auto lg:grid-cols-2 gap-4 ">
+      @for (item of items; track item.id) {
+      <div class="grid-flow-row-dense p-4 border rounded shadow code-container">
+        <div class="flex">
+          <h3 class="text-lg font-bold mb-2 mr-auto">{{ item.title }}</h3>
+          <h5 class="ml-auto mr-4">{{ item.accessible }}</h5>
+          <button type="button" (click)="editSnippet(item)"
+            class="text-white bg-green-500 hover:-translate-y-1 transform transition duration-200 hover:shadow-md rounded-md font-medium text-sm px-5 py-2.5 text-center me-2 mb-2">Edit</button>
+
+          <button type="button" (click)="deleteSnippet(item.id)"
+            class="text-white bg-red-500 hover:-translate-y-1 transform transition duration-200 hover:shadow-md rounded-md font-medium text-sm px-5 py-2.5 text-center me-2 mb-2">Remove
+          </button>
+        </div>
+        <div dir="rtl mt-3">
+          <div class="relative h-8">
+            <button (click)="copyCode(item.code)"
+              class="hover:-translate-y-1 transform transition duration-200 absolute h-10 top-0 start-0">
+              <span id="default-icon" class="inline-flex items-center">
+                <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                  viewBox="0 0 18 20">
+                  <path
+                    d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 14H5a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-4H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-5H5a1 1 0 0 1 0-2h2V2h4v2h2a1 1 0 1 1 0 2Z" />
+                </svg>
+                <span class="ml-2 text-xs font-semibold">Copy</span>
+              </span>
+            </button>
+          </div>
+        </div>
+        <pre class="bg-gray-100 p-2 rounded code-container">{{ item.code }}</pre>
+      </div>
+      }
+    </div>
+
+    <!-- Edit Snippet Modal -->
+    <div *ngIf="editingSnippet" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
+      <div class="bg-white p-6 rounded shadow-lg max-w-md w-full">
+        <h2 class="text-2xl mb-4">Edit Snippet</h2>
+        <form (ngSubmit)="updateSnippet()">
+          <div class="mb-4">
+            <label for="title" class="block text-gray-700 font-bold mb-2">Title:</label>
+            <input type="text" id="title" [(ngModel)]="currentSnippet.title" required name="title"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+          </div>
+          <div class="mb-4">
+            <label for="code" class="block text-gray-700 font-bold mb-2">Code:</label>
+            <textarea id="code" [(ngModel)]="currentSnippet.code" required name="code"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              rows="10"></textarea>
+          </div>
+          <div *ngIf="formError" class="mb-4 text-red-600">{{ formError }}</div>
+          <div class="flex justify-end">
+            <button type="button" (click)="cancelEdit()"
+              class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2">Cancel</button>
+            <button type="submit"
+              class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</section>

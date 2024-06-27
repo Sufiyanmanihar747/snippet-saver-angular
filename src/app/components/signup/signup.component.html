@@ -1,0 +1,53 @@
+<section>
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div
+      class="flex px-4 min-h-full flex-col justify-center py-8 sm:py-12 lg:py-16 shadow-2xl backdrop-blur-sm bg-white/30 mx-auto w-full sm:w-2/3 md:w-1/2 lg:w-1/3">
+      <div class="sm:mx-auto sm:w-full sm:max-w-md">
+        <img class="mx-auto h-32 w-auto"
+          src="https://cdn3d.iconscout.com/3d/premium/thumb/add-friend-10917223-8817575.png?f=webp" alt="3d icon">
+        <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign up a new account
+        </h2>
+      </div>
+
+      <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-md">
+        <form class="space-y-6" #registerForm="ngForm" method="POST">
+          <div>
+            <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
+            <div class="mt-2">
+              <input pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$" ngModel #email="ngModel" name="email" id="email"
+                type="email" autocomplete="email" required
+                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              <p [hidden]="email.valid || email.untouched" class="text-red-700">This Email is not allowed</p>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between">
+              <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Password</label>
+              <div class="text-sm">
+                <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</a>
+              </div>
+            </div>
+            <div class="mt-2">
+              <input minlength="6" ngModel #password="ngModel" name="password" required type="password"
+                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              <p [hidden]="password.valid || password.untouched" class="text-red-700">This password is not allowed</p>
+            </div>
+          </div>
+
+          <div>
+            <button type="submit" (click)="register(registerForm)"
+              class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+              Sign up
+            </button>
+          </div>
+        </form>
+        <p class="mt-10 text-center text-sm text-black-500">
+          Already have an account?
+          <a routerLink="/login" routerLinkActive="active"
+            class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Login</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
